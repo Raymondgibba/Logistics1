@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gibba Logistics — Global Procurement & Delivery Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root{--white:#ffffff;--off-white:#f7f9fc;--light-grey:#eef1f6;--navy:#0b1f3a;--navy-mid:#1a3560;--navy-light:#2c4f82;--blue-accent:#1e6fd9;--text-dark:#0d1b2e;--text-mid:#4a5568;--text-light:#8898aa;--border:#dde3ed;--success:#16a34a;--gold:#f59e0b;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;color:var(--text-dark);background:var(--white);overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--off-white);}
+::-webkit-scrollbar-thumb{background:var(--navy);border-radius:5px;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+.top-bar{background:var(--navy);color:#fff;text-align:center;padding:.6rem 1rem;font-size:.8rem;}
+.top-bar span{opacity:.5;margin:0 .6rem;}
+
+#navbar{position:fixed;top:40px;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid transparent;transition:box-shadow .3s,border-color .3s;}
+#navbar.scrolled{box-shadow:0 2px 20px rgba(11,31,58,.1);border-color:var(--border);}
+.nav-inner{max-width:1280px;margin:0 auto;padding:.95rem 5%;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.nav-brand{display:flex;align-items:center;gap:.75rem;flex-shrink:0;}
+.brand-icon{width:38px;height:38px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;}
+.nav-brand-name{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--navy);line-height:1.1;display:block;}
+.nav-brand-sub{font-size:.65rem;color:var(--blue-accent);letter-spacing:.06em;text-transform:uppercase;font-weight:600;display:block;}
+.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none;}
+.nav-links a{font-size:.83rem;color:var(--text-mid);font-weight:500;transition:color .2s;white-space:nowrap;}
+.nav-links a:hover,.nav-links a.active{color:var(--navy);}
+.nav-cta{background:var(--navy)!important;color:#fff!important;padding:.52rem 1.3rem;border-radius:6px;font-weight:600!important;}
+.nav-cta:hover{background:var(--navy-mid)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:.3s;}
+.mob-overlay{display:none;position:fixed;inset:0;background:var(--navy);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;}
+.mob-overlay.open{display:flex;}
+.mob-overlay a{font-family:'DM Serif Display',serif;font-size:1.9rem;color:#fff;transition:color .2s;}
+.mob-overlay a:hover{color:var(--gold);}
+.mob-close{position:absolute;top:1.5rem;right:5%;background:none;border:none;color:#fff;font-size:1.8rem;cursor:pointer;}
+
+#home{min-height:100vh;display:flex;align-items:center;padding:8rem 5% 5rem;background:var(--white);position:relative;overflow:hidden;}
+.hero-shape{position:absolute;right:-8%;top:0;bottom:0;width:48%;background:var(--off-white);clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);z-index:0;}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:52% 44%;gap:4rem;align-items:center;width:100%;position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-accent);font-weight:700;margin-bottom:1.3rem;}
+.hero-eyebrow::before{content:'';display:block;width:26px;height:2px;background:var(--blue-accent);}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.4rem);color:var(--navy);line-height:1.12;margin-bottom:1.3rem;}
+h1 em{font-style:italic;color:var(--blue-accent);}
+.hero-sub{font-size:1.04rem;color:var(--text-mid);line-height:1.85;margin-bottom:2rem;max-width:500px;}
+.btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+.btn-primary{background:var(--navy);color:#fff;padding:.88rem 1.9rem;border-radius:6px;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;transition:background .2s,transform .2s;border:2px solid var(--navy);}
+.btn-primary:hover{background:var(--navy-mid);transform:translateY(-2px);}
+.btn-secondary{background:transparent;color:var(--navy);padding:.88rem 1.9rem;border-radius:6px;font-size:.9rem;font-weight:600;border:2px solid var(--navy);display:inline-flex;align-items:center;gap:.5rem;transition:background .2s,transform .2s;}
+.btn-secondary:hover{background:var(--off-white);transform:translateY(-2px);}
+.hero-trust{display:flex;flex-direction:column;gap:.5rem;}
+.trust-pt{font-size:.85rem;color:var(--text-mid);display:flex;align-items:center;gap:.5rem;}
+.trust-pt i{color:var(--success);font-size:.75rem;}
+.hero-card{background:var(--navy);border-radius:16px;padding:2.3rem;color:#fff;position:relative;overflow:hidden;}
+.hero-card::before{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:rgba(255,255,255,.04);border-radius:50%;}
+.hc-lbl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);font-weight:700;margin-bottom:.8rem;}
+.hc-title{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:1.5rem;}
+.hc-list{list-style:none;display:flex;flex-direction:column;gap:.85rem;margin-bottom:1.8rem;}
+.hc-list li{display:flex;align-items:flex-start;gap:.75rem;font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.5;}
+.hc-dot{width:20px;height:20px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.hc-dot i{font-size:.55rem;color:var(--gold);}
+.hc-div{border:none;border-top:1px solid rgba(255,255,255,.1);margin-bottom:1.3rem;}
+.hc-cta-lbl{font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:.8rem;}
+.btn-wa{background:#25D366;color:#fff;padding:.85rem 1.5rem;border-radius:8px;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:opacity .2s;}
+.btn-wa:hover{opacity:.88;}
+
+#trust-strip{background:var(--off-white);padding:2.5rem 5%;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ts-inner{max-width:1280px;margin:0 auto;}
+.ts-lbl{text-align:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-light);margin-bottom:1.8rem;font-weight:600;}
+.ts-badges{display:flex;justify-content:center;flex-wrap:wrap;}
+.ts-badge{flex:1;min-width:130px;text-align:center;padding:1rem 1.2rem;border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:.3rem;}
+.ts-badge:last-child{border-right:none;}
+.ts-badge i{font-size:1.3rem;color:var(--navy);margin-bottom:.2rem;}
+.ts-badge strong{font-size:.88rem;color:var(--navy);font-weight:700;}
+.ts-badge span{font-size:.7rem;color:var(--text-light);}
+
+section{padding:6rem 5%;}
+.s-inner{max-width:1280px;margin:0 auto;}
+.s-lbl{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue-accent);font-weight:700;margin-bottom:.75rem;display:block;}
+h2{font-family:'DM Serif Display',serif;font-size:clamp(1.9rem,3.5vw,2.7rem);color:var(--navy);line-height:1.2;margin-bottom:1rem;}
+.s-desc{color:var(--text-mid);font-size:1rem;line-height:1.8;max-width:540px;}
+.ch{text-align:center;display:flex;flex-direction:column;align-items:center;margin-bottom:3.5rem;}
+.ch .s-desc{text-align:center;}
+
+#about{background:var(--white);}
+.about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:center;margin-bottom:4rem;}
+.about-visual{position:relative;}
+.about-img-wrap{width:100%;aspect-ratio:4/5;border-radius:12px;overflow:hidden;position:relative;}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.about-stat-badge{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--navy);border-radius:10px;padding:1.2rem 1.6rem;box-shadow:0 8px 30px rgba(11,31,58,.2);}
+.about-stat-badge strong{display:block;color:#fff;font-size:1.5rem;font-family:'DM Serif Display',serif;line-height:1;}
+.about-stat-badge span{font-size:.73rem;color:rgba(255,255,255,.6);}
+.about-est{position:absolute;top:1.2rem;left:-1rem;background:var(--gold);color:var(--navy);padding:.5rem 1rem;border-radius:6px;font-size:.78rem;font-weight:700;box-shadow:0 4px 15px rgba(245,158,11,.35);}
+.about-text p{color:var(--text-mid);line-height:1.85;font-size:.97rem;margin-bottom:1rem;}
+.pills{display:flex;gap:.6rem;flex-wrap:wrap;margin:1.5rem 0;}
+.pill{background:var(--light-grey);color:var(--navy);padding:.4rem 1rem;border-radius:20px;font-size:.78rem;font-weight:600;border:1px solid var(--border);}
+.about-lnk{color:var(--blue-accent);font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s;}
+.about-lnk:hover{gap:.7rem;}
+
+.about-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.ac-img{border-radius:12px;overflow:hidden;height:270px;position:relative;cursor:pointer;}
+.ac-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.ac-img:hover img{transform:scale(1.06);}
+.ac-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,rgba(0,0,0,.75));transition:background .4s;}
+.ac-img:hover .ac-overlay{background:linear-gradient(to bottom,transparent 20%,rgba(0,0,0,.85));}
+.ac-cap{position:absolute;bottom:0;left:0;right:0;padding:1.3rem 1.4rem;}
+.ac-cap strong{display:block;color:#fff;font-size:1rem;font-weight:600;margin-bottom:.25rem;}
+.ac-cap span{font-size:.78rem;color:rgba(255,255,255,.82);}
+
+#partners{background:var(--off-white);padding:3.5rem 5%;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.p-inner{max-width:1280px;margin:0 auto;}
+.p-lbl{text-align:center;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);font-weight:600;margin-bottom:2rem;}
+.p-row{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.p-badge{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:1rem 1.8rem;text-align:center;min-width:125px;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:transform .2s,box-shadow .2s;}
+.p-badge:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.08);}
+.p-badge strong{display:block;font-size:.93rem;color:var(--navy);font-weight:700;}
+.p-badge span{font-size:.7rem;color:var(--text-light);}
+.p-note{text-align:center;font-size:.8rem;color:var(--text-light);font-style:italic;margin-top:1.4rem;}
+
+#services{background:var(--off-white);}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.svc-card{background:var(--white);border-radius:10px;padding:2.2rem;box-shadow:0 1px 4px rgba(11,31,58,.06);transition:transform .25s,box-shadow .25s;border:1px solid transparent;}
+.svc-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(11,31,58,.1);border-color:var(--border);}
+.svc-ico{width:48px;height:48px;background:var(--navy-light);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.3rem;}
+.svc-ico i{color:#fff;font-size:1.1rem;}
+.svc-card h3{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--navy);margin-bottom:.6rem;}
+.svc-card p{color:var(--text-mid);font-size:.88rem;line-height:1.75;}
+.svc-lnk{display:inline-block;margin-top:1rem;color:var(--blue-accent);font-size:.85rem;font-weight:600;}
+
+#how{background:var(--white);}
+.steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;}
+.step{text-align:center;padding:0 1.5rem;}
+.step-n{width:54px;height:54px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;color:#fff;font-family:'DM Serif Display',serif;font-size:1.25rem;}
+.step-ico{width:52px;height:52px;background:var(--off-white);border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+.step-ico i{color:var(--navy-light);font-size:1.1rem;}
+.step h3{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--navy);margin-bottom:.6rem;}
+.step p{color:var(--text-mid);font-size:.88rem;line-height:1.75;}
+.step-arr{display:flex;align-items:center;padding-top:1.2rem;color:var(--border);font-size:1.4rem;}
+.how-box{background:var(--navy);border-radius:12px;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-top:3rem;flex-wrap:wrap;}
+.how-box p{color:rgba(255,255,255,.88);font-size:1rem;font-style:italic;flex:1;}
+.btn-wh{background:#fff;color:var(--navy);padding:.75rem 1.8rem;border-radius:6px;font-size:.88rem;font-weight:700;white-space:nowrap;transition:background .2s;}
+.btn-wh:hover{background:var(--off-white);}
+
+#quote{background:var(--off-white);}
+.q-card{background:var(--white);border-radius:14px;box-shadow:0 4px 30px rgba(11,31,58,.08);padding:3rem;max-width:820px;margin:0 auto;}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.2rem;}
+.fg{display:flex;flex-direction:column;gap:.4rem;}
+.fg label{font-size:.73rem;font-weight:700;color:var(--text-dark);letter-spacing:.06em;text-transform:uppercase;}
+.fg input,.fg select,.fg textarea{background:var(--white);border:1.5px solid var(--border);border-radius:6px;padding:.82rem 1rem;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--text-dark);outline:none;transition:border-color .2s,box-shadow .2s;width:100%;-webkit-appearance:none;appearance:none;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue-accent);box-shadow:0 0 0 3px rgba(30,111,217,.1);}
+.fg textarea{resize:vertical;min-height:100px;}
+.btn-calc{width:100%;background:var(--navy);color:#fff;border:none;padding:1rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:.3rem;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.btn-calc:hover{background:var(--navy-mid);}
+.q-result{display:none;margin-top:1.5rem;background:#f0fdf4;border-left:4px solid var(--success);border-radius:0 8px 8px 0;padding:1.5rem 1.8rem;}
+.q-result-hdr{display:flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:700;color:var(--success);margin-bottom:.7rem;text-transform:uppercase;letter-spacing:.08em;}
+.q-price{font-family:'DM Serif Display',serif;font-size:2.2rem;color:var(--navy);margin-bottom:.5rem;}
+.q-note{font-size:.78rem;color:var(--text-light);line-height:1.6;margin-bottom:1.2rem;}
+.q-actions{display:flex;gap:.8rem;flex-wrap:wrap;}
+.btn-qm{background:var(--navy);color:#fff;padding:.65rem 1.3rem;border-radius:6px;font-size:.83rem;font-weight:600;display:inline-flex;align-items:center;gap:.4rem;transition:background .2s;}
+.btn-qm:hover{background:var(--navy-mid);}
+.btn-qw{background:#25D366;color:#fff;padding:.65rem 1.3rem;border-radius:6px;font-size:.83rem;font-weight:600;display:inline-flex;align-items:center;gap:.4rem;transition:opacity .2s;}
+.btn-qw:hover{opacity:.85;}
+
+#timeline{background:var(--white);}
+.tl-tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:2.5rem 0 3rem;}
+.tab-btn{padding:.6rem 1.5rem;border-radius:20px;font-size:.85rem;font-weight:600;border:2px solid var(--navy);cursor:pointer;background:transparent;color:var(--navy);font-family:'DM Sans',sans-serif;transition:background .2s,color .2s;}
+.tab-btn.active{background:var(--navy);color:#fff;}
+.tab-btn:hover:not(.active){background:var(--off-white);}
+.tl-panel{display:none;}
+.tl-panel.active{display:block;animation:fadeUp .35s ease;}
+.phases{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;}
+.phase{background:var(--off-white);border-top:3px solid var(--navy);border-radius:10px;padding:1.8rem 1.5rem;text-align:center;box-shadow:0 2px 12px rgba(11,31,58,.07);}
+.ph-n{width:36px;height:36px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;font-weight:700;margin:0 auto 1rem;}
+.phase h4{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:.6rem;}
+.ph-days{display:inline-block;background:var(--blue-accent);color:#fff;font-size:.7rem;padding:.28rem .8rem;border-radius:20px;font-weight:600;margin-bottom:.8rem;}
+.phase p{color:var(--text-mid);font-size:.83rem;line-height:1.7;}
+.ph-arr{display:flex;align-items:center;justify-content:center;padding-top:2.5rem;color:var(--text-light);font-size:1.1rem;padding-left:.5rem;padding-right:.5rem;}
+.tl-box{background:var(--navy);border-radius:10px;padding:1.8rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;margin-top:2.5rem;flex-wrap:wrap;}
+.tl-box p{color:rgba(255,255,255,.88);font-size:.95rem;flex:1;}
+.tl-box p i{color:var(--gold);margin-right:.3rem;}
+
+#stats{background:var(--navy);padding:5rem 5%;}
+.stats-g{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;}
+.stat-it{padding:2rem;border-right:1px solid rgba(255,255,255,.1);}
+.stat-it:last-child{border-right:none;}
+.stat-n{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,5vw,4rem);color:#fff;line-height:1;display:block;margin-bottom:.5rem;}
+.stat-l{font-size:.78rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;font-weight:500;}
+
+#testimonials{background:var(--off-white);}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.t-card{background:var(--white);border-radius:10px;padding:2rem;box-shadow:0 1px 6px rgba(11,31,58,.06);border:1px solid var(--border);transition:box-shadow .25s;position:relative;}
+.t-card:hover{box-shadow:0 6px 25px rgba(11,31,58,.1);}
+.t-stars{color:var(--gold);font-size:.85rem;margin-bottom:1rem;letter-spacing:2px;}
+.t-quote{color:var(--text-mid);font-size:.92rem;line-height:1.8;font-style:italic;margin-bottom:1.3rem;}
+.t-div{border:none;border-top:1px solid var(--border);margin-bottom:1.2rem;}
+.t-author strong{display:block;font-size:.9rem;color:var(--navy);font-weight:700;}
+.t-author span{font-size:.78rem;color:var(--text-light);}
+.v-badge{position:absolute;bottom:1.4rem;right:1.4rem;background:var(--navy);color:#fff;font-size:.65rem;padding:.22rem .6rem;border-radius:20px;font-weight:600;}
+.t-note{text-align:center;margin-top:2rem;font-size:.82rem;color:var(--text-light);font-style:italic;}
+
+#faq{background:var(--white);}
+.faq-w{max-width:720px;margin:2.5rem auto 0;}
+.faq-it{border-bottom:1px solid var(--border);}
+.faq-it:first-child{border-top:1px solid var(--border);}
+.faq-q{width:100%;background:none;border:none;padding:1.25rem 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left;gap:1rem;font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--navy);}
+.faq-q:hover{color:var(--blue-accent);}
+.faq-it.open .faq-q{color:var(--blue-accent);}
+.faq-it.open{border-left:3px solid var(--blue-accent);padding-left:1rem;}
+.faq-ic{width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:transform .3s;color:var(--text-light);font-size:.82rem;}
+.faq-it.open .faq-ic{transform:rotate(180deg);color:var(--blue-accent);}
+.faq-ans{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;}
+.faq-it.open .faq-ans{max-height:300px;padding-bottom:1.2rem;}
+.faq-ans p{color:var(--text-mid);font-size:.92rem;line-height:1.8;}
+
+#contact{background:var(--navy);padding:6rem 5%;}
+.contact-g{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start;}
+.cl h2{color:#fff;margin-bottom:1rem;}
+.cl>p{color:rgba(255,255,255,.68);font-size:.95rem;line-height:1.8;margin-bottom:2rem;}
+.c-it{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem;color:rgba(255,255,255,.78);font-size:.88rem;}
+.c-ic{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.c-ic i{color:rgba(255,255,255,.7);font-size:.85rem;}
+.c-it a{color:rgba(255,255,255,.78);transition:color .2s;}
+.c-it a:hover{color:#fff;}
+.btn-waf{display:flex;align-items:center;justify-content:center;gap:.5rem;background:#25D366;color:#fff;padding:.85rem 1.5rem;border-radius:8px;font-size:.9rem;font-weight:600;margin-top:1.5rem;transition:opacity .2s;}
+.btn-waf:hover{opacity:.88;}
+.r-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.08);color:#fff;padding:.4rem 1rem;border-radius:20px;font-size:.75rem;font-weight:500;margin-top:1rem;}
+.r-badge i{color:var(--gold);}
+.biz-h{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:.6rem;}
+.cf-card{background:#fff;border-radius:12px;padding:2.5rem;}
+.cfr{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.1rem;}
+.cfg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem;}
+.cfg label{font-size:.72rem;font-weight:700;color:var(--text-dark);letter-spacing:.06em;text-transform:uppercase;}
+.cfg input,.cfg select,.cfg textarea{background:var(--white);border:1.5px solid var(--border);border-radius:6px;padding:.82rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text-dark);outline:none;transition:border-color .2s,box-shadow .2s;width:100%;-webkit-appearance:none;appearance:none;}
+.cfg input:focus,.cfg select:focus,.cfg textarea:focus{border-color:var(--blue-accent);box-shadow:0 0 0 3px rgba(30,111,217,.1);}
+.cfg textarea{resize:vertical;min-height:100px;}
+.btn-sub{width:100%;background:var(--navy);color:#fff;border:none;padding:1rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:.93rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.5rem;transition:background .2s;}
+.btn-sub:hover{background:var(--navy-mid);}
+.f-priv{font-size:.75rem;color:var(--text-light);text-align:center;margin-top:.6rem;}
+.f-succ{text-align:center;padding:2.5rem 1rem;}
+.f-succ i{font-size:3rem;color:var(--success);margin-bottom:1rem;display:block;}
+.f-succ h3{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:.5rem;}
+.f-succ p{color:var(--text-mid);font-size:.9rem;}
+
+footer{background:var(--white);border-top:1px solid var(--border);}
+.f-main{max-width:1280px;margin:0 auto;padding:4rem 5% 2rem;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;}
+.f-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:.8rem;}
+.f-logo-ic{width:36px;height:36px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;}
+.f-brand-n{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--navy);display:block;}
+.f-brand-s{font-size:.65rem;color:var(--blue-accent);letter-spacing:.06em;text-transform:uppercase;font-weight:600;display:block;}
+.f-brand p{font-size:.85rem;color:var(--text-mid);line-height:1.7;margin-bottom:1.4rem;}
+.f-soc{display:flex;gap:.6rem;}
+.soc-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-mid);font-size:.8rem;transition:border-color .2s,color .2s;}
+.soc-btn:hover{border-color:var(--gold);color:var(--gold);}
+.f-col h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:1.2rem;}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.f-col ul li a{font-size:.86rem;color:var(--text-mid);transition:color .2s;}
+.f-col ul li a:hover{color:var(--navy);}
+.f-bot{background:var(--light-grey);border-top:1px solid var(--border);}
+.f-bot-in{max-width:1280px;margin:0 auto;padding:1.2rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.f-bot-in p{font-size:.78rem;color:var(--text-light);}
+
+.float-wa{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.35rem;z-index:998;box-shadow:0 4px 18px rgba(37,211,102,.4);transition:transform .2s;}
+.float-wa:hover{transform:scale(1.1);}
+.scr-top{position:fixed;bottom:2rem;right:5.2rem;width:42px;height:42px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;z-index:998;opacity:0;pointer-events:none;transition:opacity .3s;}
+.scr-top.show{opacity:1;pointer-events:all;}
+
+.ck-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);z-index:9990;padding:1rem 5%;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;box-shadow:0 -4px 20px rgba(0,0,0,.06);}
+.ck-bar.hidden{display:none;}
+.ck-bar p{font-size:.84rem;color:var(--text-mid);flex:1;}
+.ck-actions{display:flex;align-items:center;gap:1rem;flex-shrink:0;}
+.btn-ck{background:var(--navy);color:#fff;border:none;padding:.5rem 1.3rem;border-radius:6px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.ck-learn{font-size:.82rem;color:var(--blue-accent);font-weight:500;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}.d4{transition-delay:.4s;}
+
+@media(max-width:1024px){
+  .hero-shape{display:none;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-card{max-width:520px;}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .about-img-wrap{max-width:340px;}
+  .about-cards{grid-template-columns:repeat(3,1fr);}
+  .svc-grid{grid-template-columns:1fr 1fr;}
+  .stats-g{grid-template-columns:repeat(2,1fr);}
+  .stat-it:nth-child(2){border-right:none;}
+  .t-grid{grid-template-columns:1fr 1fr;}
+  .contact-g{grid-template-columns:1fr;gap:2.5rem;}
+  .f-main{grid-template-columns:1fr 1fr;gap:2rem;}
+}
+@media(max-width:768px){
+  .top-bar{font-size:.7rem;padding:.5rem;}
+  #navbar{top:32px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  h1{font-size:2rem;}
+  h2{font-size:1.7rem;}
+  section{padding:4rem 5%;}
+  .ts-badge{min-width:45%;border-right:none;border-bottom:1px solid var(--border);}
+  .about-cards{grid-template-columns:1fr;}
+  .ac-img{height:220px;}
+  .svc-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;gap:1.5rem;}
+  .step-arr{display:none;}
+  .phases{grid-template-columns:1fr;gap:1rem;}
+  .ph-arr{display:none;}
+  .tl-tabs{gap:.4rem;}
+  .tab-btn{font-size:.78rem;padding:.5rem 1rem;}
+  .stats-g{grid-template-columns:1fr 1fr;}
+  .stat-it{padding:1.5rem 1rem;}
+  .t-grid{grid-template-columns:1fr;}
+  .fr2{grid-template-columns:1fr;}
+  .cfr{grid-template-columns:1fr;}
+  .f-main{grid-template-columns:1fr;gap:2rem;padding:3rem 5% 1.5rem;}
+  .f-bot-in{flex-direction:column;text-align:center;}
+  .how-box,.tl-box{flex-direction:column;}
+  .p-badge{min-width:110px;padding:.8rem 1rem;}
+  .q-card{padding:1.8rem;}
+  .ck-bar{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<div class="ck-bar" id="ckBar">
+  <p>🍪 We use cookies to improve your browsing experience.</p>
+  <div class="ck-actions">
+    <button class="btn-ck" id="ckAccept">Accept</button>
+    <a href="#" class="ck-learn">Learn More</a>
+  </div>
+</div>
+
+<div class="top-bar">📦 Banjul, Gambia <span>·</span> Serving 30+ Countries Worldwide <span>·</span> Response Within 24 Hours</div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-brand">
+      <div class="brand-icon"><i class="fas fa-shipping-fast"></i></div>
+      <div>
+        <span class="nav-brand-name">Ebrima Logistics</span>
+        <span class="nav-brand-sub">Global Procurement &amp; Delivery</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">Process</a></li>
+      <li><a href="#quote">Quote</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#testimonials">Clients</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact" class="nav-cta">Get a Free Quote</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob-overlay" id="mobOverlay">
+  <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+  <a href="#about" class="ml">About</a>
+  <a href="#services" class="ml">Services</a>
+  <a href="#how" class="ml">Process</a>
+  <a href="#quote" class="ml">Quote</a>
+  <a href="#timeline" class="ml">Timeline</a>
+  <a href="#testimonials" class="ml">Clients</a>
+  <a href="#faq" class="ml">FAQ</a>
+  <a href="#contact" class="ml">Contact</a>
+</div>
+
+<section id="home">
+  <div class="hero-shape"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow reveal">Global Procurement &amp; Logistics Solutions</div>
+      <h1 class="reveal d1">Source Anything.<br/><em>Deliver Everywhere.</em></h1>
+      <p class="hero-sub reveal d2">We source and deliver any product — from a single item to full shipping containers — across West Africa, Europe, Asia, and the Americas. On time, every time.</p>
+      <div class="btn-row reveal d3">
+        <a href="#contact" class="btn-primary"><i class="fas fa-box-open"></i> Place an Order</a>
+        <a href="#how" class="btn-secondary">How It Works <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-trust reveal d4">
+        <div class="trust-pt"><i class="fas fa-check"></i> No order too big or small</div>
+        <div class="trust-pt"><i class="fas fa-check"></i> Transparent pricing on every order</div>
+        <div class="trust-pt"><i class="fas fa-check"></i> Fully tracked from source to doorstep</div>
+      </div>
+    </div>
+    <div class="hero-card reveal d2">
+      <p class="hc-lbl">Why clients choose us</p>
+      <p class="hc-title">A Procurement Partner You Can Rely On</p>
+      <ul class="hc-list">
+        <li><div class="hc-dot"><i class="fas fa-check"></i></div>Verified supplier network across 4 continents</li>
+        <li><div class="hc-dot"><i class="fas fa-check"></i></div>End-to-end logistics management, start to finish</li>
+        <li><div class="hc-dot"><i class="fas fa-check"></i></div>Regular status updates until delivery is complete</li>
+        <li><div class="hc-dot"><i class="fas fa-check"></i></div>Over 500 successful orders fulfilled worldwide</li>
+      </ul>
+      <hr class="hc-div"/>
+      <p class="hc-cta-lbl">Ready to place an order?</p>
+      <a href="https://wa.me/2201234567" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> Chat on WhatsApp Now</a>
+    </div>
+  </div>
+</section>
+
+<div id="trust-strip">
+  <div class="ts-inner">
+    <p class="ts-lbl">Trusted by businesses and individuals across the world</p>
+    <div class="ts-badges">
+      <div class="ts-badge reveal"><i class="fas fa-globe-africa"></i><strong>West Africa</strong><span>Primary Region</span></div>
+      <div class="ts-badge reveal d1"><i class="fas fa-boxes"></i><strong>500+ Orders</strong><span>Track Record</span></div>
+      <div class="ts-badge reveal d2"><i class="fas fa-star"></i><strong>5-Star Rated</strong><span>Client Satisfaction</span></div>
+      <div class="ts-badge reveal d3"><i class="fas fa-lock"></i><strong>Secure</strong><span>Transactions</span></div>
+      <div class="ts-badge reveal d4"><i class="fas fa-ship"></i><strong>Container to Doorstep</strong><span>Full Service</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="s-inner">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80" alt="Logistics operations at work"/>
+          <div class="about-est">Est. 2014</div>
+        </div>
+        <div class="about-stat-badge">
+          <strong>500+</strong>
+          <span>Orders Delivered</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="s-lbl reveal">Who We Are</span>
+        <h2 class="reveal d1">A Business Built on Trust &amp; <em>Reliable Delivery</em></h2>
+        <p class="reveal d1">Gibba Logistics is a procurement and logistics company based in Banjul, The Gambia. We specialise in sourcing goods from international markets and coordinating delivery to clients across West Africa and beyond.</p>
+        <p class="reveal d2">Our team has spent over a decade building a trusted network of verified suppliers across Asia, Europe, and the Americas. We handle everything — from a single personal order to full container loads — with transparent pricing and real-time updates every step of the way.</p>
+        <p class="reveal d2">Our commitment is simple: get your goods to you on time, at a fair price, with zero hassle.</p>
+        <div class="pills reveal d3">
+          <span class="pill">Global Supplier Network</span>
+          <span class="pill">End-to-End Logistics</span>
+          <span class="pill">Any Order Size</span>
+        </div>
+        <a href="#services" class="about-lnk reveal d3">Explore our services <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="about-cards">
+      <div class="ac-img reveal">
+        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&q=80" alt="Worldwide Service"/>
+        <div class="ac-overlay"></div>
+        <div class="ac-cap"><strong>Worldwide Service</strong><span>Sourcing from 4 continents</span></div>
+      </div>
+      <div class="ac-img reveal d1">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" alt="Centralised Documents"/>
+        <div class="ac-overlay"></div>
+        <div class="ac-cap"><strong>Centralised Documents</strong><span>All paperwork handled for you</span></div>
+      </div>
+      <div class="ac-img reveal d2">
+        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=600&q=80" alt="Trustworthy and Secure"/>
+        <div class="ac-overlay"></div>
+        <div class="ac-cap"><strong>Trustworthy &amp; Secure</strong><span>Your order is in safe hands</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="partners">
+  <div class="p-inner">
+    <p class="p-lbl">Our Trusted Shipping &amp; Freight Partners</p>
+    <div class="p-row">
+      <div class="p-badge reveal"><strong>DHL</strong><span>Express Delivery</span></div>
+      <div class="p-badge reveal d1"><strong>Maersk</strong><span>Ocean Freight</span></div>
+      <div class="p-badge reveal d2"><strong>FedEx</strong><span>Air Freight</span></div>
+      <div class="p-badge reveal d3"><strong>MSC</strong><span>Container Shipping</span></div>
+      <div class="p-badge reveal d3"><strong>Emirates SkyCargo</strong><span>Air Cargo</span></div>
+      <div class="p-badge reveal d4"><strong>UPS</strong><span>Global Logistics</span></div>
+    </div>
+    <p class="p-note reveal">We work with leading global freight carriers to ensure reliable, trackable delivery for every order.</p>
+  </div>
+</div>
+
+<section id="services">
+  <div class="s-inner">
+    <div class="ch">
+      <span class="s-lbl reveal">Our Services</span>
+      <h2 class="reveal d1">Complete Procurement &amp; Logistics Solutions</h2>
+      <p class="s-desc reveal d2">Tailored sourcing and delivery services for businesses and individuals — clear pricing, verified suppliers, dependable delivery.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal"><div class="svc-ico"><i class="fas fa-box"></i></div><h3>Small &amp; Personal Orders</h3><p>Need something specific? We source individual items and personal orders with the same care as large commercial contracts.</p><a href="#contact" class="svc-lnk">Get a quote →</a></div>
+      <div class="svc-card reveal d1"><div class="svc-ico"><i class="fas fa-warehouse"></i></div><h3>Bulk &amp; Wholesale</h3><p>Volume purchasing at competitive prices. We leverage our supplier network to negotiate the best deal for your bulk order.</p><a href="#contact" class="svc-lnk">Get a quote →</a></div>
+      <div class="svc-card reveal d2"><div class="svc-ico"><i class="fas fa-ship"></i></div><h3>Container Shipping</h3><p>Full container loads (FCL) and less-than-container loads (LCL) arranged and coordinated with full customs support.</p><a href="#contact" class="svc-lnk">Get a quote →</a></div>
+      <div class="svc-card reveal"><div class="svc-ico"><i class="fas fa-globe"></i></div><h3>Import &amp; Export</h3><p>We manage all cross-border documentation, duties, and compliance for smooth international movement of goods.</p><a href="#contact" class="svc-lnk">Get a quote →</a></div>
+      <div class="svc-card reveal d1"><div class="svc-ico"><i class="fas fa-handshake"></i></div><h3>Supplier Sourcing</h3><p>Access to a vetted global supplier network. We identify reliable manufacturers and negotiate the best terms on your behalf.</p><a href="#contact" class="svc-lnk">Get a quote →</a></div>
+      <div class="svc-card reveal d2"><div class="svc-ico"><i class="fas fa-truck"></i></div><h3>Last-Mile Delivery</h3><p>From port to doorstep. We arrange final delivery so your goods arrive safely, on time, and in perfect condition.</p><a href="#contact" class="svc-lnk">Get a quote →</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="s-inner">
+    <div class="ch">
+      <span class="s-lbl reveal">Our Process</span>
+      <h2 class="reveal d1">How We Get It Done</h2>
+      <p class="s-desc reveal d2">Three simple steps from request to delivery. We handle all the complexity in between.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="step-n">1</div><div class="step-ico"><i class="fas fa-comment-dots"></i></div><h3>You Tell Us What You Need</h3><p>Submit via our order form, WhatsApp, or email. Include item details, quantity, and your destination country.</p></div>
+      <div class="step-arr reveal"><i class="fas fa-chevron-right"></i></div>
+      <div class="step reveal d1"><div class="step-n">2</div><div class="step-ico"><i class="fas fa-search"></i></div><h3>We Source &amp; Negotiate</h3><p>Our team finds verified suppliers, checks quality, and secures the best price. You receive a full quote before anything ships.</p></div>
+      <div class="step-arr reveal d1"><i class="fas fa-chevron-right"></i></div>
+      <div class="step reveal d2"><div class="step-n">3</div><div class="step-ico"><i class="fas fa-check-circle"></i></div><h3>Your Order Is Delivered</h3><p>Your shipment is tracked end-to-end and delivered to your address. We send updates at every stage until it arrives.</p></div>
+    </div>
+    <div class="how-box reveal">
+      <p>"Every order — no matter the size — gets the same level of care, attention, and follow-through."</p>
+      <a href="#contact" class="btn-wh">Start Your Order Today</a>
+    </div>
+  </div>
+</section>
+
+<section id="quote">
+  <div class="s-inner">
+    <div class="ch">
+      <span class="s-lbl reveal">Instant Estimate</span>
+      <h2 class="reveal d1">Get a Quick Quote</h2>
+      <p class="s-desc reveal d2">Fill in the details below for an instant estimated quote. Final pricing is always confirmed directly before your order begins.</p>
+    </div>
+    <div class="q-card reveal">
+      <div class="fr2">
+        <div class="fg"><label>Item Type</label>
+          <select id="q-item"><option value="">Select item type...</option><option>Electronics</option><option>Clothing &amp; Textiles</option><option>Food &amp; Agriculture</option><option>Construction Materials</option><option>Machinery &amp; Equipment</option><option>Consumer Goods</option><option>Other</option></select>
+        </div>
+        <div class="fg"><label>Shipping Method</label>
+          <select id="q-method"><option value="">Select method...</option><option value="sea">Sea Freight</option><option value="air">Air Freight</option><option value="land">Land Transport</option><option value="unsure">Not Sure Yet</option></select>
+        </div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label>Origin Country</label><input type="text" id="q-origin" placeholder="e.g. China, Turkey, UAE"/></div>
+        <div class="fg"><label>Destination Country</label><input type="text" id="q-dest" placeholder="e.g. Gambia, Senegal, Ghana"/></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label>Quantity / Weight</label><input type="number" id="q-qty" placeholder="e.g. 100" min="0"/></div>
+        <div class="fg"><label>Unit</label>
+          <select id="q-unit"><option value="kg">Kilograms (kg)</option><option value="ton">Metric Tons</option><option value="pcs">Units / Pieces</option><option value="carton">Cartons</option><option value="20ft">Container (20ft)</option><option value="40ft">Container (40ft)</option></select>
+        </div>
+      </div>
+      <button class="btn-calc" id="calcBtn"><i class="fas fa-calculator"></i> Calculate My Quote</button>
+      <div class="q-result" id="qResult">
+        <div class="q-result-hdr"><i class="fas fa-check-circle"></i> Estimated Quote Range</div>
+        <div class="q-price" id="qPrice">$0 — $0 USD</div>
+        <p class="q-note">This is an estimated range only. Final pricing depends on current freight rates, supplier location, and order specifics. We confirm exact pricing within 24 hours.</p>
+        <div class="q-actions">
+          <a href="#" id="qMail" class="btn-qm"><i class="fas fa-envelope"></i> Send to Us</a>
+          <a href="#" id="qWa" class="btn-qw"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="s-inner">
+    <div class="ch">
+      <span class="s-lbl reveal">Delivery Timelines</span>
+      <h2 class="reveal d1">How Long Will It Take?</h2>
+      <p class="s-desc reveal d2">Estimated delivery phases from order placement to your doorstep. Timelines vary by origin, destination, and shipping method.</p>
+    </div>
+    <div class="tl-tabs">
+      <button class="tab-btn active" data-tab="asia">Asia &amp; China</button>
+      <button class="tab-btn" data-tab="europe">Europe</button>
+      <button class="tab-btn" data-tab="mideast">Middle East</button>
+      <button class="tab-btn" data-tab="americas">Americas</button>
+    </div>
+    <div class="tl-panel active" id="tab-asia">
+      <div class="phases">
+        <div class="phase reveal"><div class="ph-n">1</div><h4>Order Processing</h4><span class="ph-days">3–7 Days</span><p>We source your items, verify supplier quality, negotiate pricing, and confirm all order details before shipment begins.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d1"><div class="ph-n">2</div><h4>Ocean / Air Freight</h4><span class="ph-days">Sea: 25–40 Days · Air: 5–10 Days</span><p>Goods are loaded and shipped from Asia via major ports. Air freight is available for urgent or time-sensitive orders.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d2"><div class="ph-n">3</div><h4>Customs &amp; Delivery</h4><span class="ph-days">5–10 Days</span><p>Goods clear customs at the destination port. We manage all documentation and arrange last-mile delivery.</p></div>
+      </div>
+    </div>
+    <div class="tl-panel" id="tab-europe">
+      <div class="phases">
+        <div class="phase reveal"><div class="ph-n">1</div><h4>Order Processing</h4><span class="ph-days">2–5 Days</span><p>Suppliers confirmed across European markets with quality checks and pricing secured before shipment begins.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d1"><div class="ph-n">2</div><h4>Freight Transit</h4><span class="ph-days">Sea: 10–18 Days · Land: 7–14 Days</span><p>Ocean freight or land transport depending on your destination and the nature of the cargo being shipped.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d2"><div class="ph-n">3</div><h4>Customs &amp; Delivery</h4><span class="ph-days">3–7 Days</span><p>Customs clearance fully handled and final delivery arranged directly to your specified address.</p></div>
+      </div>
+    </div>
+    <div class="tl-panel" id="tab-mideast">
+      <div class="phases">
+        <div class="phase reveal"><div class="ph-n">1</div><h4>Order Processing</h4><span class="ph-days">2–5 Days</span><p>Suppliers confirmed across UAE, Saudi Arabia, and surrounding markets with upfront pricing negotiated.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d1"><div class="ph-n">2</div><h4>Air / Sea Freight</h4><span class="ph-days">Sea: 12–20 Days · Air: 3–6 Days</span><p>Flexible shipping options selected based on urgency, cargo size, and your required delivery timeframe.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d2"><div class="ph-n">3</div><h4>Customs &amp; Delivery</h4><span class="ph-days">3–7 Days</span><p>Full customs handling and coordinated last-mile delivery to your final destination address.</p></div>
+      </div>
+    </div>
+    <div class="tl-panel" id="tab-americas">
+      <div class="phases">
+        <div class="phase reveal"><div class="ph-n">1</div><h4>Order Processing</h4><span class="ph-days">3–7 Days</span><p>Sourcing confirmed across USA, Canada, Brazil, and regional suppliers with full quality verification.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d1"><div class="ph-n">2</div><h4>Ocean Freight</h4><span class="ph-days">20–35 Days</span><p>Transatlantic or transpacific ocean freight arranged depending on the origin port and your destination.</p></div>
+        <div class="ph-arr"><i class="fas fa-chevron-right"></i></div>
+        <div class="phase reveal d2"><div class="ph-n">3</div><h4>Customs &amp; Delivery</h4><span class="ph-days">5–10 Days</span><p>Import documentation, customs clearance, and local last-mile delivery fully arranged.</p></div>
+      </div>
+    </div>
+    <div class="tl-box reveal">
+      <p><i class="fas fa-bolt"></i> Need it faster? We can arrange express air freight for urgent orders. Contact us directly for expedited options.</p>
+      <a href="#contact" class="btn-wh">Request Express Delivery</a>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="stats-g">
+    <div class="stat-it reveal"><span class="stat-n"><span class="counter" data-target="500">0</span>+</span><span class="stat-l">Orders Successfully Fulfilled</span></div>
+    <div class="stat-it reveal d1"><span class="stat-n"><span class="counter" data-target="30">0</span>+</span><span class="stat-l">Countries Served Worldwide</span></div>
+    <div class="stat-it reveal d2"><span class="stat-n"><span class="counter" data-target="10">0</span>+</span><span class="stat-l">Years of Experience</span></div>
+    <div class="stat-it reveal d3"><span class="stat-n"><span class="counter" data-target="100">0</span>+</span><span class="stat-l">Satisfied Clients</span></div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="s-inner">
+    <div class="ch">
+      <span class="s-lbl reveal">Client Feedback</span>
+      <h2 class="reveal d1">What Our Clients Say</h2>
+      <p class="s-desc reveal d2">Real feedback from verified clients across West Africa and beyond.</p>
+    </div>
+    <div class="t-grid">
+      <div class="t-card reveal"><div class="t-stars">★★★★★</div><p class="t-quote">"They handled a full container shipment from China for my construction business. Kept me informed throughout and delivered exactly on time. Genuinely exceptional service."</p><hr class="t-div"/><div class="t-author"><strong>Lamin Ceesay</strong><span>Construction Business Owner, Banjul, Gambia</span></div><span class="v-badge">✓ Verified Client</span></div>
+      <div class="t-card reveal d1"><div class="t-stars">★★★★★</div><p class="t-quote">"I needed specific electronics not available locally. The team found exactly what I needed at a better price than expected. Fast, reliable, and truly professional throughout."</p><hr class="t-div"/><div class="t-author"><strong>Fatou Jallow</strong><span>Retail Shop Owner, Dakar, Senegal</span></div><span class="v-badge">✓ Verified Client</span></div>
+      <div class="t-card reveal d2"><div class="t-stars">★★★★★</div><p class="t-quote">"From small personal orders to large wholesale purchases, every request is handled seriously. My go-to logistics partner for anything I need sourced internationally."</p><hr class="t-div"/><div class="t-author"><strong>Modou Sanneh</strong><span>Import/Export Trader, Guinea-Bissau</span></div><span class="v-badge">✓ Verified Client</span></div>
+    </div>
+    <p class="t-note reveal">All testimonials are from verified clients. Our reputation is built on consistent results.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="s-inner">
+    <div class="ch" style="margin-bottom:.5rem;">
+      <span class="s-lbl reveal">FAQ</span>
+      <h2 class="reveal d1">Common Questions</h2>
+    </div>
+    <div class="faq-w">
+      <div class="faq-it"><button class="faq-q">What kinds of items can you source?<span class="faq-ic"><i class="fas fa-chevron-down"></i></span></button><div class="faq-ans"><p>Virtually anything — electronics, clothing, food products, construction materials, machinery, consumer goods, and more. No order is too big or too small for our team to handle.</p></div></div>
+      <div class="faq-it"><button class="faq-q">How long does delivery take?<span class="faq-ic"><i class="fas fa-chevron-down"></i></span></button><div class="faq-ans"><p>It depends on origin, destination, and shipping method. We provide a clear estimated timeline before your order begins. Use our Timeline section above for general estimates by region.</p></div></div>
+      <div class="faq-it"><button class="faq-q">Can you handle full container loads?<span class="faq-ic"><i class="fas fa-chevron-down"></i></span></button><div class="faq-ans"><p>Yes. We coordinate both full container loads (FCL) and less-than-container loads (LCL) for international shipments of any scale.</p></div></div>
+      <div class="faq-it"><button class="faq-q">How does payment work?<span class="faq-ic"><i class="fas fa-chevron-down"></i></span></button><div class="faq-ans"><p>Payment terms are discussed and confirmed before any order is placed. We believe in full transparency — no surprises, no hidden fees at any stage.</p></div></div>
+      <div class="faq-it"><button class="faq-q">Which countries do you serve?<span class="faq-ic"><i class="fas fa-chevron-down"></i></span></button><div class="faq-ans"><p>We serve clients across West Africa, Europe, Asia, and the Americas. Contact us to confirm coverage for your specific destination.</p></div></div>
+      <div class="faq-it"><button class="faq-q">How do I get started?<span class="faq-ic"><i class="fas fa-chevron-down"></i></span></button><div class="faq-ans"><p>Fill out the order form below, send us a WhatsApp message, or email us directly. We respond to all inquiries within 24 hours.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-g">
+    <div class="cl reveal">
+      <span class="s-lbl" style="color:rgba(255,255,255,.4);">Get in Touch</span>
+      <h2>Place Your Order</h2>
+      <p>Fill in the form and our team will respond within 24 hours with a confirmed quote and clear next steps.</p>
+      <div class="c-it"><div class="c-ic"><i class="fas fa-phone"></i></div><a href="tel:+2201234567">+220 123 4567</a></div>
+      <div class="c-it"><div class="c-ic"><i class="fas fa-envelope"></i></div><a href="mailto:info@gibbalogistics.com">info@gibbalogistics.com</a></div>
+      <div class="c-it"><div class="c-ic"><i class="fas fa-map-marker-alt"></i></div><span>Banjul, The Gambia</span></div>
+      <a href="https://wa.me/2201234567" target="_blank" class="btn-waf"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+      <div class="r-badge"><i class="fas fa-bolt"></i> We respond within 24 hours</div>
+      <p class="biz-h">Business hours: Mon–Sat · 8AM–8PM GMT</p>
+    </div>
+    <div class="cf-card reveal d1" id="formCard">
+      <form id="contactForm">
+        <div class="cfr">
+          <div class="cfg"><label>Full Name *</label><input type="text" placeholder="Your full name" required/></div>
+          <div class="cfg"><label>Email Address *</label><input type="email" placeholder="your@email.com" required/></div>
+        </div>
+        <div class="cfr">
+          <div class="cfg"><label>Phone / WhatsApp</label><input type="tel" placeholder="+220 000 0000"/></div>
+          <div class="cfg"><label>Destination Country *</label><input type="text" placeholder="e.g. Gambia, Senegal, Ghana" required/></div>
+        </div>
+        <div class="cfg"><label>What do you need? *</label><textarea rows="4" placeholder="Describe the items you need sourced and delivered, including quantity and specifications..." required></textarea></div>
+        <div class="cfr">
+          <div class="cfg"><label>Order Scale</label><select><option>Personal / Small Order</option><option>Bulk / Wholesale</option><option>Container Load</option><option>Not Sure Yet</option></select></div>
+          <div class="cfg"><label>Urgency</label><select><option>Standard Delivery</option><option>Express</option><option>Urgent</option></select></div>
+        </div>
+        <button type="submit" class="btn-sub">Send Inquiry <i class="fas fa-paper-plane"></i></button>
+        <p class="f-priv">We never share your details with third parties.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-main">
+    <div class="f-brand">
+      <div class="f-logo">
+        <div class="f-logo-ic"><i class="fas fa-shipping-fast"></i></div>
+        <div><span class="f-brand-n">Gibba Logistics</span><span class="f-brand-s">Procurement &amp; Delivery</span></div>
+      </div>
+      <p>Based in Banjul, Gambia. Sourcing and delivering goods to clients across West Africa, Europe, Asia, and the Americas.</p>
+      <div class="f-soc">
+        <a href="#" class="soc-btn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/2201234567" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#quote">Quote Calculator</a></li>
+        <li><a href="#timeline">Shipping Timeline</a></li>
+        <li><a href="#testimonials">Client Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Personal Orders</a></li>
+        <li><a href="#services">Bulk Procurement</a></li>
+        <li><a href="#services">Container Shipping</a></li>
+        <li><a href="#services">Import &amp; Export</a></li>
+        <li><a href="#services">Supplier Sourcing</a></li>
+        <li><a href="#services">Last-Mile Delivery</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+2201234567">+220 123 4567</a></li>
+        <li><a href="mailto:info@gibbalogistics.com">info@gibbalogistics.com</a></li>
+        <li><a href="#contact">Banjul, The Gambia</a></li>
+      </ul>
+      <p style="margin-top:1rem;font-size:.77rem;color:var(--text-light);line-height:1.6;">Regions:<br/>West Africa · Europe<br/>Asia · Americas</p>
+    </div>
+  </div>
+  <div class="f-bot">
+    <div class="f-bot-in">
+      <p>© 2025 Gibba Logistics. All Rights Reserved.</p>
+      <p>Trusted Global Procurement &amp; Delivery Solutions</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/2201234567" target="_blank" class="float-wa" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+<a href="#home" class="scr-top" id="scrTop"><i class="fas fa-arrow-up"></i></a>
+
+<script>
+// NAVBAR
+const nb = document.getElementById('navbar');
+const st = document.getElementById('scrTop');
+window.addEventListener('scroll', () => {
+  nb.classList.toggle('scrolled', window.scrollY > 60);
+  st.classList.toggle('show', window.scrollY > 400);
+});
+
+// MOBILE MENU
+document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobOverlay').classList.add('open'));
+document.getElementById('mobClose').addEventListener('click', () => document.getElementById('mobOverlay').classList.remove('open'));
+document.querySelectorAll('.ml').forEach(l => l.addEventListener('click', () => document.getElementById('mobOverlay').classList.remove('open')));
+
+// ACTIVE NAV
+const secs = document.querySelectorAll('section[id],div[id]');
+const nls = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 140) cur = s.id; });
+  nls.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+});
+
+// REVEAL
+const revObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(r => revObs.observe(r));
+
+// COUNTERS
+const cObs = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target, target = +el.dataset.target;
+      let n = 0; const step = Math.ceil(target / 60);
+      const t = setInterval(() => { n = Math.min(n + step, target); el.textContent = n; if (n >= target) clearInterval(t); }, 20);
+      cObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(c => cObs.observe(c));
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const it = btn.parentElement, isOpen = it.classList.contains('open');
+    document.querySelectorAll('.faq-it.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) it.classList.add('open');
+  });
+});
+
+// QUOTE CALC
+document.getElementById('calcBtn').addEventListener('click', () => {
+  const method = document.getElementById('q-method').value;
+  const qty = parseFloat(document.getElementById('q-qty').value) || 0;
+  const unit = document.getElementById('q-unit').value;
+  const origin = document.getElementById('q-origin').value || 'N/A';
+  const dest = document.getElementById('q-dest').value || 'N/A';
+  const item = document.getElementById('q-item').value || 'General goods';
+  if (!method || qty <= 0) { alert('Please select a Shipping Method and enter a Quantity.'); return; }
+  const rates = { sea:{rate:2,min:200}, air:{rate:8,min:500}, land:{rate:1.5,min:150}, unsure:{rate:3,min:250} };
+  const r = rates[method] || rates.unsure;
+  let priceText;
+  if (unit === '20ft') { priceText = method === 'air' ? 'Contact us for a quote' : '$1,800 — $2,430 USD'; }
+  else if (unit === '40ft') { priceText = method === 'air' ? 'Contact us for a quote' : '$2,800 — $3,780 USD'; }
+  else {
+    let kg = qty;
+    if (unit === 'ton') kg *= 1000;
+    else if (unit === 'pcs') kg *= 0.5;
+    else if (unit === 'carton') kg *= 20;
+    const calc = Math.max(kg * r.rate, r.min);
+    const mn = Math.round(calc / 10) * 10;
+    const mx = Math.round((calc * 1.35) / 10) * 10;
+    priceText = `$${mn.toLocaleString()} — $${mx.toLocaleString()} USD`;
+  }
+  document.getElementById('qPrice').textContent = priceText;
+  const msg = encodeURIComponent(`Hello, I'd like a quote:\n- Item: ${item}\n- Route: ${origin} → ${dest}\n- Qty: ${qty} ${unit}\n- Method: ${method}\n- Estimate: ${priceText}`);
+  document.getElementById('qMail').href = `mailto:info@gibbalogistics.com?subject=Quote Request&body=${msg}`;
+  document.getElementById('qWa').href = `https://wa.me/2201234567?text=${msg}`;
+  const res = document.getElementById('qResult');
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+});
+
+// TIMELINE TABS
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tl-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// CONTACT FORM
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('formCard').innerHTML = `<div class="f-succ"><i class="fas fa-check-circle"></i><h3>Inquiry Received!</h3><p>Thank you for reaching out. Our team will respond within 24 hours with a quote and next steps.</p></div>`;
+});
+
+// COOKIE
+const ck = document.getElementById('ckBar');
+if (localStorage.getItem('ck')) ck.classList.add('hidden');
+document.getElementById('ckAccept').addEventListener('click', () => { ck.classList.add('hidden'); localStorage.setItem('ck','1'); });
+</script>
+</body>
+</html>
